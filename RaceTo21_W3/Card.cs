@@ -10,13 +10,11 @@ namespace RaceTo21
     {
         public string id;
         public string fullName;
-        public int value;
 
-        public Card (string shortName,string longName, int point)
+        public Card (string shortName,string longName)
         {
             id = shortName;
             fullName = longName;
-            value = point;
         }
 
     }

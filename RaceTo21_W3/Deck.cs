@@ -7,10 +7,17 @@ namespace RaceTo21
     public class Deck
     {
         List<Card> cards = new List<Card>();
+        Dictionary<string, string> cardImages = new Dictionary<string, string>(); // Adjust: Create a Dictionary that associates each card “ID” with one of the card image file names (as a String)
 
         public Deck()
+        {          
+        }
+
+        // Add a new method, this method will be used build a new deck
+        public void buildDeck()
         {
             Console.WriteLine("*********** Building deck...");
+            cards = new List<Card>();
             string[] suits = { "Spades", "Hearts", "Clubs", "Diamands" };
 
             for (int cardVal = 1; cardVal <= 13; cardVal++)
@@ -19,34 +26,40 @@ namespace RaceTo21
                 {
                     string cardName;
                     string cardLongName;
+                    string cardImageName; // Adjust: Add a variable to store image name of the card
                     switch (cardVal)
                     {
                         case 1:
                             cardName = "A";
                             cardLongName = "Ace";
+                            cardImageName = "A";
                             break;
                         case 11:
                             cardName = "J";
                             cardLongName = "Jack";
+                            cardImageName = "J";
                             break;
                         case 12:
                             cardName = "Q";
                             cardLongName = "Queen";
+                            cardImageName = "Q";
                             break;
                         case 13:
                             cardName = "K";
-                            cardLongName = "King";                         
+                            cardLongName = "King";
+                            cardImageName = "K";
                             break;
                         default:
                             cardName = cardVal.ToString();
                             cardLongName = cardName;
+                            cardImageName = cardVal.ToString().PadLeft(2, '0');
                             break;
                     }
-                    cards.Add(new Card((cardName + cardSuit.First<char>()), (cardLongName + " of " + cardSuit), cardVal));
+                    cards.Add(new Card((cardName + cardSuit.First<char>()), (cardLongName + " of " + cardSuit)));
+                    cardImages.Add(cardName + cardSuit.First<char>(), "card_" + cardSuit.ToLower() + "_" + cardImageName + ".png"); // Add 52 dictionaries
                 }
             }
         }
-
         public void Shuffle()
         {
             Console.WriteLine("Shuffling Cards...");
@@ -88,9 +101,9 @@ namespace RaceTo21
             }
         }
 
-        public string DealTopCard()
+        public Card DealTopCard()
         {
-            string card = cards[cards.Count - 1].id;
+            Card card = new Card( cards[cards.Count - 1].id, cards[cards.Count - 1].fullName );
             cards.RemoveAt(cards.Count - 1);
             // Console.WriteLine("I'm giving you " + card);
             return card;
