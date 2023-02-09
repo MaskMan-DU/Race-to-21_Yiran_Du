@@ -13,12 +13,17 @@ namespace RaceTo21
         public Tasks nextTask; // keeps track of game state
         private bool cheating = true; // lets you cheat for testing purposes if true
 
+        int highPoints = 0; // Implementation: Set a variable to keep track the high points (part of Level2)
+        int pointsToGameOver = 100;
+
         public Game(CardTable c)
         {
             cardTable = c;
             deck.buildDeck();
             deck.Shuffle();
             deck.ShowAllCards();
+            Console.WriteLine("*****************"); 
+            Console.WriteLine("The final winner will be the one who has more than " + pointsToGameOver + " points!");
             nextTask = Tasks.GetNumberOfPlayers;
         }
 
@@ -308,55 +313,74 @@ namespace RaceTo21
          */
         public void IsContinue()
         {
-            int lastTotalPlayers = players.Count; // Store the last total players
+            
+            int lastTotalPlayers = players.Count;
 
+            // Implementation: Game ends when one player reaches an agreed-upon score (level 2)
             for (int i = 0; i < players.Count; i++)
             {
-                Console.Write(players[i].name + ", do you want to play another turn? (Y/N)");
-                string response = Console.ReadLine();
-                // If the player agree, all data of this player will be reset
-                if (response.ToUpper().StartsWith("Y"))
+                if (players[i].points > highPoints)
                 {
-                    players[i].cards = new List<Card>();
-                    players[i].score = 0;
-                    players[i].status = PlayerStatus.active;
+                    highPoints = players[i].points;
                 }
-                // If the player disagree, the player will be removed
-                else if (response.ToUpper().StartsWith("N"))
+            }
+            if (highPoints < pointsToGameOver)
+            {
+                for (int i = 0; i < players.Count; i++)
                 {
-                    players.RemoveAt(i);
-                    i--; // When data in the list is removed, the Index of all the data after it is subtracted by one, so here i is also subtracted by one to avoid skipping data. 
+                    Console.Write(players[i].name + ", do you want to play another turn? (Y/N)");
+                    string response = Console.ReadLine();
+                    // If the player agree, all data of this player will be reset
+                    if (response.ToUpper().StartsWith("Y"))
+                    {
+                        players[i].cards = new List<Card>();
+                        players[i].score = 0;
+                        players[i].status = PlayerStatus.active;
+                    }
+                    // If the player disagree, the player will be removed
+                    else if (response.ToUpper().StartsWith("N"))
+                    {
+                        players.RemoveAt(i);
+                        i--; // When data in the list is removed, the Index of all the data after it is subtracted by one, so here i is also subtracted by one to avoid skipping data. 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please answer Y(es) or N(o)!");
+                    }
                 }
+
+                // When the number of players decreases, but is greater than one, shuffle player and reset currentPlayer to avoid error.
+                // If players.Count < lastTotalPlayers, it is definitly someone give up
+                if (players.Count <= lastTotalPlayers && players.Count > 1)
+                {
+                    shufflePlayer();
+                    currentPlayer = 0;
+                    nextTask = Tasks.IntroducePlayers;
+                }
+                // If just one player wants to continue, that player win the game, and game over
+                else if (players.Count == 1)
+                {
+                    Console.WriteLine(players[0].name + " wins!");
+                    Console.Write("Press <Enter> to exit... ");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    nextTask = Tasks.GameOver;
+                }
+                // If there is no player wants to continue, the game will end
                 else
                 {
-                    Console.WriteLine("Please answer Y(es) or N(o)!");
+                    Console.WriteLine("Nobody wants to continue!");
+                    Console.Write("Press <Enter> to exit... ");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    nextTask = Tasks.GameOver;
                 }
             }
-
-            // When the number of players decreases, but is greater than one, shuffle player and reset currentPlayer to avoid error.
-            // If players.Count < lastTotalPlayers, it is definitly someone give up
-            if (players.Count <= lastTotalPlayers && players.Count > 1)
-            {
-                shufflePlayer();
-                currentPlayer = 0;
-                nextTask = Tasks.IntroducePlayers;
-            }
-            // If just one player wants to continue, that player win the game, and game over
-            else if (players.Count == 1)
-            {
-                Console.WriteLine(players[0].name + " wins!");
-                Console.Write("Press <Enter> to exit... ");
-                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-                nextTask = Tasks.GameOver;
-            }
-            // If there is no player wants to continue, the game will end
             else
             {
-                Console.WriteLine("Nobody wants to continue!");
+                Console.WriteLine(players.Find(player => player.points == highPoints).name + " is the final winner!");
                 Console.Write("Press <Enter> to exit... ");
                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                 nextTask = Tasks.GameOver;
-            }
+            } 
         }
 
 
