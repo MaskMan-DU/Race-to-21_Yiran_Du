@@ -86,12 +86,15 @@ namespace RaceTo21
                         if (player.score > 21)
                         {
                             player.status = PlayerStatus.bust;
+
+                            player.points -= player.score; // Implementation: If the player is bust, the player loses points equal to their hand total minus 21. (Level 2)
+
                         }
                         else if (player.score == 21)
                         {
                             player.status = PlayerStatus.win;
 
-                        }
+                        }                       
                     }
                     else if (drawOneCard && drawThreeCard)
                     {
@@ -105,17 +108,19 @@ namespace RaceTo21
                         if (player.score > 21)
                         {
                             player.status = PlayerStatus.bust;
+
+                            player.points -= player.score; // Implementation: If the player is bust, the player loses points equal to their hand total minus 21. (Level 2)
                         }
                         else if (player.score == 21)
                         {
                             player.status = PlayerStatus.win;
-
                         }
 
                         // If the player still not bust or win, the player will stay
                         if (player.status == PlayerStatus.active)
                         {
-                            player.status = PlayerStatus.stay; // If the player want to draw three cards, the player will stay
+                            player.status = PlayerStatus.stay; // If the player wants to draw three cards, the player will stay
+
                         }
 
                     }
@@ -136,6 +141,12 @@ namespace RaceTo21
                     // Adjust: Put the winner detection out of the AnnounceWinner method. If no player draws card, the game will not stop.
                     if (winner != null)
                     {
+                        // Implementation: If the player is stay, the player earns no points. (Level 2)
+                        if (winner.status != PlayerStatus.stay)
+                        {
+                            winner.points += winner.score; // Implementation: When a player win, the player earns the points equal to his score. (Level 1)
+                        }                    
+
                         cardTable.AnnounceWinner(winner);
 
                         /* Console.Write("Press <Enter> to exit... ");
@@ -252,7 +263,7 @@ namespace RaceTo21
 
         public Player DoFinalScoring()
         {
-            int highScore = 1; // Adjust: change the highScore from 0 to 1, because when a player draw a card the highScore must be 1 or more, so there is no problem.
+            int highScore = 0; // Fix: reset this value
             foreach (var player in players)
             {
                 cardTable.ShowHand(player);
@@ -269,14 +280,22 @@ namespace RaceTo21
                 }
                 // if busted don't bother checking!
             }
-            if (highScore > 0) // someone scored, anyway!
+
+            if (highScore > 0) // someone scored, anyway! And no one bust
             {
                 // find the FIRST player in list who meets win condition
-                return players.Find(player => player.score == highScore); // Adjust: Because the default highScore is 1, so if there is nobody draw card, it will return null
+                return players.Find(player => player.score == highScore); 
             }
 
-            // return null; // everyone must have busted because nobody won!
-            return players.Find(player => player.status != PlayerStatus.bust);  // Adjust: if all but one player “busts”, remaining player should immediately win
+            // Fix: Check if there is a player
+            if (players.Find(player => player.status == PlayerStatus.bust) != null)
+            {
+                // return null; // everyone must have busted because nobody won!
+                return players.Find(player => player.status != PlayerStatus.bust);  // Adjust: if all but one player “busts”, remaining player should immediately win
+            }
+
+            // No player draws card
+            return null;
         }
 
 

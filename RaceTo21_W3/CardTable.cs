@@ -124,6 +124,8 @@ namespace RaceTo21
 
                 Console.Write(allCards.Remove(allCards.Length - 2) + " = " + player.score + "/21 "); // Adjust: Use Remove function to remove the final ", " of allCards variable
 
+                Console.WriteLine(player.name + "'s points: " + player.points);
+
                 if (player.status != PlayerStatus.active)
                 {
                     Console.Write("(" + player.status.ToString().ToUpper() + ")");
@@ -155,6 +157,8 @@ namespace RaceTo21
             // Remove the detection here
 
             Console.WriteLine(player.name + " wins!");
+
+            Console.WriteLine(player.name + "'s points: " + player.points);
 
             /*Console.Write("Press <Enter> to exit... ");
             while (Console.ReadKey().Key != ConsoleKey.Enter) { }*/
