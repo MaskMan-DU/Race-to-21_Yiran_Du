@@ -5,16 +5,16 @@ namespace RaceTo21
 {
     public class Game
     {
-        int numberOfPlayers; // number of players in current game
-        List<Player> players = new List<Player>(); // list of objects containing player data
-        CardTable cardTable; // object in charge of displaying game information
-        Deck deck = new Deck(); // deck of cards
-        int currentPlayer = 0; // current player on list
+        private int numberOfPlayers; // number of players in current game
+        private List<Player> players = new List<Player>(); // list of objects containing player data
+        private CardTable cardTable; // object in charge of displaying game information
+        private Deck deck = new Deck(); // deck of cards
+        private int currentPlayer = 0; // current player on list
         public Tasks nextTask; // keeps track of game state
         private bool cheating = true; // lets you cheat for testing purposes if true
 
-        int highPoints = 0; // Implementation: Set a variable to keep track the high points (part of Level2)
-        int pointsToGameOver = 100;
+        private int highPoints = 0; // Implementation: Set a variable to keep track the high points (part of Level2)
+        private int pointsToGameOver = 60;
 
         public Game(CardTable c)
         {
@@ -23,14 +23,14 @@ namespace RaceTo21
             deck.Shuffle();
             deck.ShowAllCards();
             Console.WriteLine("*****************"); 
-            Console.WriteLine("The final winner will be the one who has more than " + pointsToGameOver + " points!");
+            Console.WriteLine("The final winner will be the one who has more than " + pointsToGameOver + " points or the player who perseveres to the end!");
             nextTask = Tasks.GetNumberOfPlayers;
         }
 
         /* Adds a player to the current game
          * Called by DoNextTask() method
          */
-        public void AddPlayer(string n)
+        private void AddPlayer(string n)
         {
             players.Add(new Player(n));
         }
@@ -92,7 +92,8 @@ namespace RaceTo21
                         {
                             player.status = PlayerStatus.bust;
 
-                            player.points -= player.score; // Implementation: If the player is bust, the player loses points equal to their hand total minus 21. (Level 2)
+                            int losePoints = player.score - 21; // Implementation: If the player is bust, the player loses points equal to their hand total minus 21. (Level 2)
+                            player.points -= losePoints; 
 
                         }
                         else if (player.score == 21)

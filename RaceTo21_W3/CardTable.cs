@@ -122,7 +122,7 @@ namespace RaceTo21
                     allCards = allCards + card.fullName + ", "; // Adjust: allCards will save store the full name of all the cards + ", "
                 }
 
-                Console.Write(allCards.Remove(allCards.Length - 2) + " = " + player.score + "/21 "); // Adjust: Use Remove function to remove the final ", " of allCards variable
+                Console.WriteLine(allCards.Remove(allCards.Length - 2) + " = " + player.score + "/21 "); // Adjust: Use Remove function to remove the final ", " of allCards variable
 
                 Console.WriteLine(player.name + "'s points: " + player.points);
 
