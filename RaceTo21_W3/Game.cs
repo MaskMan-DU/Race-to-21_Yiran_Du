@@ -11,7 +11,7 @@ namespace RaceTo21
         private Deck deck = new Deck(); // deck of cards
         private int currentPlayer = 0; // current player on list
         public Tasks nextTask; // keeps track of game state
-        private bool cheating = true; // lets you cheat for testing purposes if true
+        private bool cheating; // lets you cheat for testing purposes if true
 
         private int highPoints = 0; // Implementation: Set a variable to keep track the high points (part of Level2)
         private int pointsToGameOver = 60;
@@ -24,6 +24,27 @@ namespace RaceTo21
             deck.ShowAllCards();
             Console.WriteLine("*****************"); 
             Console.WriteLine("The final winner will be the one who has more than " + pointsToGameOver + " points or the player who perseveres to the end!");
+            Console.WriteLine("*****************");
+            Console.WriteLine("Do you want to open cheat mode? (Y/N)");
+            string response = Console.ReadLine();
+            while (true)
+            {
+                if (response.ToUpper().StartsWith("Y"))
+                {
+                    cheating = true;
+                    return;
+                }
+                else if (response.ToUpper().StartsWith("N"))
+                {
+                    cheating = false;
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Please answer Y(es) or N(o)!");
+                }
+            }
+            
             nextTask = Tasks.GetNumberOfPlayers;
         }
 
@@ -147,11 +168,13 @@ namespace RaceTo21
                     // Adjust: Put the winner detection out of the AnnounceWinner method. If no player draws card, the game will not stop.
                     if (winner != null)
                     {
-                        // Implementation: If the player is stay, the player earns no points. (Level 2)
+                        /*// Implementation: If the player is stay, the player earns no points. (Level 2)
                         if (winner.status != PlayerStatus.stay)
                         {
                             winner.points += winner.score; // Implementation: When a player win, the player earns the points equal to his score. (Level 1)
-                        }                    
+                        }*/
+
+                        winner.points += winner.score; // Implementation: When a player win, the player earns the points equal to his score. (Level 1)
 
                         cardTable.AnnounceWinner(winner);
 
@@ -163,7 +186,7 @@ namespace RaceTo21
                     }
                     else
                     {
-                        cardTable.resulfForNoDrawnCard(winner); // Add a new method to told all players that nobody draws card.
+                        cardTable.resultForNoDrawnCard(winner); // Add a new method to told all players that nobody draws card.
                         // Reset all players status
                         foreach (var player in players)
                         {
@@ -191,7 +214,7 @@ namespace RaceTo21
             }
         }
 
-        public int ScoreHand(Player player)
+        private int ScoreHand(Player player)
         {
             int score = 0;
             if (cheating == true && player.status == PlayerStatus.active)
@@ -228,7 +251,7 @@ namespace RaceTo21
             return score;
         }
 
-        public bool CheckActivePlayers()
+        private bool CheckActivePlayers()
         {
             // Adjust: When check the first winner, end the game
             foreach (var player in players)
@@ -267,7 +290,7 @@ namespace RaceTo21
             return false; // everyone has stayed!
         }
 
-        public Player DoFinalScoring()
+        private Player DoFinalScoring()
         {
             int highScore = 0; // Fix: reset this value
             foreach (var player in players)
@@ -312,7 +335,7 @@ namespace RaceTo21
          * and shuffled. In addition, player list is shuffled, to ensure the same person doesn’t always win 
          * a tiebreaker. 
          */
-        public void IsContinue()
+        private void IsContinue()
         {
             
             int lastTotalPlayers = players.Count;
@@ -387,7 +410,7 @@ namespace RaceTo21
 
         /* This method is use to shuffle the player list
          */
-        public void shufflePlayer()
+        private void shufflePlayer()
         {
             Random rng = new Random();
 

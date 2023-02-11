@@ -164,7 +164,7 @@ namespace RaceTo21
             while (Console.ReadKey().Key != ConsoleKey.Enter) { }*/
         }
 
-        public void resulfForNoDrawnCard(Player player)
+        public void resultForNoDrawnCard(Player player)
         {
             Console.WriteLine("No player draws card!");
         }
