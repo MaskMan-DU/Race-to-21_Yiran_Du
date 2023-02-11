@@ -378,6 +378,8 @@ namespace RaceTo21
                 if (players.Count <= lastTotalPlayers && players.Count > 1)
                 {
                     shufflePlayer();
+                    deck.buildDeck();
+                    deck.Shuffle();
                     currentPlayer = 0;
                     nextTask = Tasks.IntroducePlayers;
                 }
