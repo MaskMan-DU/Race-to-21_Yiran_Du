@@ -11,7 +11,8 @@ namespace RaceTo21
         private Deck deck = new Deck(); // deck of cards
         private int currentPlayer = 0; // current player on list
         public Tasks nextTask; // keeps track of game state
-        private bool cheating; // lets you cheat for testing purposes if true
+        private readonly bool cheating = true; // lets you cheat for testing purposes if true
+        public bool Cheating { get { return cheating; } }
 
         private int highPoints = 0; // Implementation: Set a variable to keep track the high points (part of Level2)
         private int pointsToGameOver = 60;
@@ -24,7 +25,7 @@ namespace RaceTo21
             deck.ShowAllCards();
             Console.WriteLine("*****************"); 
             Console.WriteLine("The final winner will be the one who has more than " + pointsToGameOver + " points or the player who perseveres to the end!");
-            Console.WriteLine("*****************");
+            /*Console.WriteLine("*****************");
             Console.WriteLine("Do you want to open cheat mode? (Y/N)");
             string response = Console.ReadLine();
             while (true)
@@ -43,8 +44,8 @@ namespace RaceTo21
                 {
                     Console.WriteLine("Please answer Y(es) or N(o)!");
                 }
-            }
-            
+            }*/
+
             nextTask = Tasks.GetNumberOfPlayers;
         }
 
@@ -217,7 +218,8 @@ namespace RaceTo21
         private int ScoreHand(Player player)
         {
             int score = 0;
-            if (cheating == true && player.status == PlayerStatus.active)
+
+            if (Cheating == true && player.status == PlayerStatus.active)
             {
                 string response = null;
                 while (int.TryParse(response, out score) == false)
@@ -373,7 +375,7 @@ namespace RaceTo21
                     }
                 }
 
-                // When the number of players decreases, but is greater than one, shuffle player and reset currentPlayer to avoid error.
+                // When the number of players decreases, but is greater than one, shuffle player and reset currentPlayer to avoid error. And build a new deck and shuffle it.
                 // If players.Count < lastTotalPlayers, it is definitly someone give up
                 if (players.Count <= lastTotalPlayers && players.Count > 1)
                 {
