@@ -18,6 +18,7 @@ namespace RaceTo21
         {
             Console.WriteLine("*********** Building deck...");
             cards = new List<Card>();
+            cardImages = new Dictionary<string, string>();
             string[] suits = { "Spades", "Hearts", "Clubs", "Diamands" };
 
             for (int cardVal = 1; cardVal <= 13; cardVal++)

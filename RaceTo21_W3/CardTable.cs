@@ -60,11 +60,11 @@ namespace RaceTo21
             return response;
         }
 
-        public bool OfferACard(Player player)
+        /*public bool OfferACard(Player player)
         {
             while (true)
             {
-                Console.Write(player.name + ", do you want a card? (Y/N)");
+                Console.Write(player.name + ", do you want card? (Y/N)"); // Adjust: Change to do you want card?
                 string response = Console.ReadLine();
                 if (response.ToUpper().StartsWith("Y"))
                 {
@@ -79,30 +79,34 @@ namespace RaceTo21
                     Console.WriteLine("Please answer Y(es) or N(o)!");
                 }
             }
-        }
+        }*/
 
         /// <summary>
-        /// Check if the player wants to draw three cards
+        /// To get answer from the player, how many cards do you want?
         /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
-        public bool OfferThreeCards(Player player)
+        /// <param name="player">The player from Game object</param>
+        /// <returns>How many cards the player want to draw</returns>
+        /// Call by Game object
+        public int OfferHowManyCards(Player player)
         {
             while (true)
             {
-                Console.Write(player.name + ", do you want three cards? (Y/N)");
+                Console.Write(player.name + ", how many cards do you want? (0-3)");
                 string response = Console.ReadLine();
-                if (response.ToUpper().StartsWith("Y"))
+                if (int.TryParse(response, out int howManyCards))
                 {
-                    return true;
-                }
-                else if (response.ToUpper().StartsWith("N"))
-                {
-                    return false;
+                    if (howManyCards < 4 && howManyCards >= 0)
+                    {
+                        return howManyCards;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please type 0, 1, 2 or 3!");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Please answer Y(es) or N(o)!");
+                    Console.WriteLine("Please type 0, 1, 2 or 3!");
                 }
             }
         }
