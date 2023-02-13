@@ -6,7 +6,7 @@ namespace RaceTo21
 {
     public class Deck
     {
-        List<Card> cards = new List<Card>();
+        List<Card> cards = new List<Card>(); // To store a deck of cards
         Dictionary<string, string> cardImages = new Dictionary<string, string>(); // Adjust: Create a Dictionary that associates each card “ID” with one of the card image file names (as a String)
 
         public Deck()
@@ -14,6 +14,10 @@ namespace RaceTo21
         }
 
         // Add a new method, this method will be used build a new deck
+        /// <summary>
+        /// Re-create a deck of cards
+        /// </summary>
+        /// Is called by Game object
         public void buildDeck()
         {
             Console.WriteLine("*********** Building deck...");
@@ -61,6 +65,11 @@ namespace RaceTo21
                 }
             }
         }
+
+        /// <summary>
+        /// To disrupt the order of the cards in the deck
+        /// </summary>
+        /// Is called by Game object
         public void Shuffle()
         {
             Console.WriteLine("Shuffling Cards...");
@@ -89,19 +98,26 @@ namespace RaceTo21
 
         public void ShowAllCards()
         {
-            for (int i=0; i<cards.Count; i++)
+            for (int i = 0; i < cards.Count; i++)
             {
-                Console.Write(i+":"+cards[i].id); // a list property can look like an Array!
-                if (i < cards.Count -1)
+                Console.Write(i + ":" + cards[i].id); // a list property can look like an Array!
+                if (i < cards.Count - 1)
                 {
                     Console.Write(" ");
-                } else
+                }
+                else
                 {
                     Console.WriteLine("");
                 }
             }
         }
 
+
+        /// <summary>
+        /// Get the data of the last card in the deck list, i.e. draw a card from the top of the deck
+        /// </summary>
+        /// <returns>The card's data, its id and full name</returns>
+        /// Is called by Game object
         public Card DealTopCard()
         {
             Card card = new Card( cards[cards.Count - 1].id, cards[cards.Count - 1].fullName );

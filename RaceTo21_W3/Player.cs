@@ -6,10 +6,10 @@ namespace RaceTo21
 	public class Player
 	{
 		public string name;
-		public List<Card> cards = new List<Card>();
-		public PlayerStatus status = PlayerStatus.active;
-		public int score;
-		public int points = 0;
+		public List<Card> cards = new List<Card>(); // To store the player's hands
+		public PlayerStatus status = PlayerStatus.active; // Keep the player's status
+		public int score; // Keep the score of the player's hands
+		public int points = 0; // To store the Points the player won
 
 		public Player(string n)
 		{

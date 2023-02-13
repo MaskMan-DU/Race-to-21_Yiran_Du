@@ -60,33 +60,12 @@ namespace RaceTo21
             return response;
         }
 
-        /*public bool OfferACard(Player player)
-        {
-            while (true)
-            {
-                Console.Write(player.name + ", do you want card? (Y/N)"); // Adjust: Change to do you want card?
-                string response = Console.ReadLine();
-                if (response.ToUpper().StartsWith("Y"))
-                {
-                    return true;
-                }
-                else if (response.ToUpper().StartsWith("N"))
-                {
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("Please answer Y(es) or N(o)!");
-                }
-            }
-        }*/
-
         /// <summary>
         /// To get answer from the player, how many cards do you want?
         /// </summary>
-        /// <param name="player">The player from Game object</param>
-        /// <returns>How many cards the player want to draw</returns>
-        /// Call by Game object
+        /// <param name="player">Game object provides the player's data</param>
+        /// <returns>The number of cards the player want to draw</returns>
+        /// Is called by Game object
         public int OfferHowManyCards(Player player)
         {
             while (true)
@@ -111,10 +90,14 @@ namespace RaceTo21
             }
         }
 
-
+        /// <summary>
+        /// Display information about this player, the player's name, the hands the player has, the score, the status and the points.
+        /// </summary>
+        /// <param name="player">Game object provides the player's data</param>
+        /// Is called by Game object
         public void ShowHand(Player player)
-        {
-            if (player.cards.Count > 0)
+        {   
+            if (player.cards.Count > 0) // When the player has cards, running the following code
             {
                 Console.Write(player.name + " has: ");
 
@@ -130,7 +113,7 @@ namespace RaceTo21
 
                 Console.WriteLine(player.name + "'s points: " + player.points);
 
-                if (player.status != PlayerStatus.active)
+                if (player.status != PlayerStatus.active) // When the player status is not active, output the player's status
                 {
                     Console.Write("(" + player.status.ToString().ToUpper() + ")");
                 }
@@ -138,6 +121,11 @@ namespace RaceTo21
             }
         }
 
+        /// <summary>
+        /// Run the ShowHand() method for each player
+        /// </summary>
+        /// <param name="players">Game object provides list of players</param>
+        /// Is called by Game object
         public void ShowHands(List<Player> players)
         {
             foreach (Player player in players)
@@ -146,29 +134,26 @@ namespace RaceTo21
             }
         }
 
-
+        /// <summary>
+        /// Show the winner of each round, and the points of the winner
+        /// </summary>
+        /// <param name="player">Game object provides the player's data</param>
+        /// Is called by Game object
         public void AnnounceWinner(Player player)
         {
-
-            /*if (player != null)
-            {
-                Console.WriteLine(player.name + " wins!");
-            }
-            else
-            {
-                Console.WriteLine("No player draws card!");
-            }*/
             // Remove the detection here
 
             Console.WriteLine(player.name + " wins!");
 
             Console.WriteLine(player.name + "'s points: " + player.points);
 
-            /*Console.Write("Press <Enter> to exit... ");
-            while (Console.ReadKey().Key != ConsoleKey.Enter) { }*/
         }
 
-        public void resultForNoDrawnCard(Player player)
+        /// <summary>
+        /// Type the text "No player draws card!"
+        /// </summary>
+        /// Is called by Game object
+        public void resultForNoDrawnCard()
         {
             Console.WriteLine("No player draws card!");
         }
