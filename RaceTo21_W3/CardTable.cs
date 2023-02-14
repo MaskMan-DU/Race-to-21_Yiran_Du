@@ -70,7 +70,7 @@ namespace RaceTo21
         {
             while (true)
             {
-                Console.Write(player.name + ", how many cards do you want? (0-3)");
+                Console.Write(player.Name + ", how many cards do you want? (0-3)");
                 string response = Console.ReadLine();
                 if (int.TryParse(response, out int howManyCards))
                 {
@@ -99,7 +99,7 @@ namespace RaceTo21
         {   
             if (player.cards.Count > 0) // When the player has cards, running the following code
             {
-                Console.Write(player.name + " has: ");
+                Console.Write(player.Name + " has: ");
 
                 string allCards = ""; // Adjust: Use string allCards to store all cards in the player hands
 
@@ -111,7 +111,7 @@ namespace RaceTo21
 
                 Console.WriteLine(allCards.Remove(allCards.Length - 2) + " = " + player.score + "/21 "); // Adjust: Use Remove function to remove the final ", " of allCards variable
 
-                Console.WriteLine(player.name + "'s points: " + player.points);
+                Console.WriteLine(player.Name + "'s points: " + player.points);
 
                 if (player.status != PlayerStatus.active) // When the player status is not active, output the player's status
                 {
@@ -143,9 +143,9 @@ namespace RaceTo21
         {
             // Remove the detection here
 
-            Console.WriteLine(player.name + " wins!");
+            Console.WriteLine(player.Name + " wins!");
 
-            Console.WriteLine(player.name + "'s points: " + player.points);
+            Console.WriteLine(player.Name + "'s points: " + player.points);
 
         }
 

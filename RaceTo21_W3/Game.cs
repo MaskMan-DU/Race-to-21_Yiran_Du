@@ -221,7 +221,7 @@ namespace RaceTo21
                 string response = null;
                 while (int.TryParse(response, out score) == false)
                 {
-                    Console.Write("OK, what should player " + player.name + "'s score be?");
+                    Console.Write("OK, what should player " + player.Name + "'s score be?");
                     response = Console.ReadLine();
                 }
                 return score;
@@ -366,7 +366,7 @@ namespace RaceTo21
                 Console.WriteLine("================================");
                 for (int i = 0; i < players.Count; i++)
                 {
-                    Console.Write(players[i].name + ", do you want to play another round? (Y/N)");
+                    Console.Write(players[i].Name + ", do you want to play another round? (Y/N)");
                     string response = Console.ReadLine();
                     // If the player agree, all data of this player will be reset
                     if (response.ToUpper().StartsWith("Y"))
@@ -404,7 +404,7 @@ namespace RaceTo21
                     int winnerPoints = 0;
                     foreach(var player in players)
                     {
-                        Console.WriteLine(player.name + "'s points: " + player.points);
+                        Console.WriteLine(player.Name + "'s points: " + player.points);
                         if (winnerPoints < player.points)
                         {
                             winnerPoints = player.points;
@@ -412,7 +412,7 @@ namespace RaceTo21
                     }
                     foreach(var player in giveUpPlayers)
                     {
-                        Console.WriteLine(player.name + "'s points: " + player.points);
+                        Console.WriteLine(player.Name + "'s points: " + player.points);
                         if (winnerPoints < player.points)
                         {
                             winnerPoints = player.points;
@@ -421,12 +421,12 @@ namespace RaceTo21
 
                     if (players.Find(player => player.score == winnerPoints) != null)
                     {
-                        Console.WriteLine(players.Find(player => player.score == winnerPoints).name + " is the final winner!");
+                        Console.WriteLine(players.Find(player => player.score == winnerPoints).Name + " is the final winner!");
                     }
 
                     if (giveUpPlayers.Find(player => player.score == winnerPoints) != null)
                     {
-                        Console.WriteLine(giveUpPlayers.Find(player => player.score == winnerPoints).name + " is the final winner!");
+                        Console.WriteLine(giveUpPlayers.Find(player => player.score == winnerPoints).Name + " is the final winner!");
                     }                  
 
                     Console.Write("Press <Enter> to exit... ");
@@ -439,13 +439,13 @@ namespace RaceTo21
                 Console.WriteLine("================================");
                 foreach (var player in players)
                 {
-                    Console.WriteLine(player.name + "'s points: " + player.points);
+                    Console.WriteLine(player.Name + "'s points: " + player.points);
                 }
                 foreach (var player in giveUpPlayers)
                 {
-                    Console.WriteLine(player.name + "'s points: " + player.points);
+                    Console.WriteLine(player.Name + "'s points: " + player.points);
                 }
-                Console.WriteLine(players.Find(player => player.points == highPoints).name + " is the final winner!");
+                Console.WriteLine(players.Find(player => player.points == highPoints).Name + " is the final winner!");
                 Console.Write("Press <Enter> to exit... ");
                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                 nextTask = Tasks.GameOver;
