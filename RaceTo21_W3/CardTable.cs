@@ -106,7 +106,7 @@ namespace RaceTo21
                 foreach (Card card in player.cards)
                 {
                     // Console.Write(card.fullName + ", ");
-                    allCards = allCards + card.fullName + ", "; // Adjust: allCards will save store the full name of all the cards + ", "
+                    allCards = allCards + card.FullName + ", "; // Adjust: allCards will save store the full name of all the cards + ", "
                 }
 
                 Console.WriteLine(allCards.Remove(allCards.Length - 2) + " = " + player.score + "/21 "); // Adjust: Use Remove function to remove the final ", " of allCards variable

@@ -100,7 +100,7 @@ namespace RaceTo21
         {
             for (int i = 0; i < cards.Count; i++)
             {
-                Console.Write(i + ":" + cards[i].id); // a list property can look like an Array!
+                Console.Write(i + ":" + cards[i].Id); // a list property can look like an Array!
                 if (i < cards.Count - 1)
                 {
                     Console.Write(" ");
@@ -120,7 +120,7 @@ namespace RaceTo21
         /// Is called by Game object
         public Card DealTopCard()
         {
-            Card card = new Card( cards[cards.Count - 1].id, cards[cards.Count - 1].fullName );
+            Card card = new Card( cards[cards.Count - 1].Id, cards[cards.Count - 1].FullName );
             cards.RemoveAt(cards.Count - 1);
             // Console.WriteLine("I'm giving you " + card);
             return card;

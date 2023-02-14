@@ -8,8 +8,11 @@ namespace RaceTo21
 {
     public class Card
     {
-        public string id;
-        public string fullName;
+        private string id;
+        private string fullName;
+
+        public string Id { get { return id; } }
+        public string FullName { get { return fullName; } }
 
         public Card (string shortName,string longName)
         {
