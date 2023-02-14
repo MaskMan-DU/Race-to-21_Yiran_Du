@@ -11,12 +11,16 @@ namespace RaceTo21
 		public int score; // Keep the score of the player's hands
 		public int points = 0; // To store the Points the player won
 
-		public string Name { get { return name; } set { name = value; } }
+		public string Name
+		{
+			get { return name; }
+		}
+
 
 		public Player(string n)
 		{
 			//name = n;
-			Name = n;
+			name = n;
         }
 
 		/* Introduces player by name

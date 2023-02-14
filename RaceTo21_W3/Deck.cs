@@ -6,8 +6,8 @@ namespace RaceTo21
 {
     public class Deck
     {
-        List<Card> cards = new List<Card>(); // To store a deck of cards
-        Dictionary<string, string> cardImages = new Dictionary<string, string>(); // Adjust: Create a Dictionary that associates each card “ID” with one of the card image file names (as a String)
+        private List<Card> cards = new List<Card>(); // To store a deck of cards
+        private Dictionary<string, string> cardImages = new Dictionary<string, string>(); // Adjust: Create a Dictionary that associates each card “ID” with one of the card image file names (as a String)
 
         public Deck()
         {          
