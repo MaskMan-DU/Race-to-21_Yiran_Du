@@ -192,13 +192,13 @@ namespace RaceTo21
                     }
 
                 }
-                else
+                else // someone's status is active
                 {
-                    if(currentPlayer == (players.Count - 1))
+                    if(currentPlayer == (players.Count - 1)) // Last player acts
                     {
                         currentPlayer = 0;
                     }
-                    else
+                    else // Other player acts
                     {
                         currentPlayer++;
                     }
