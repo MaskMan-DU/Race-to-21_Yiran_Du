@@ -194,8 +194,15 @@ namespace RaceTo21
                 }
                 else
                 {
-                    currentPlayer++;
-                    
+                    if(currentPlayer == (players.Count - 1))
+                    {
+                        currentPlayer = 0;
+                    }
+                    else
+                    {
+                        currentPlayer++;
+                    }
+    
                     nextTask = Tasks.PlayerTurn;
                 }
             }
