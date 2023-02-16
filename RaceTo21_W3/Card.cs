@@ -8,11 +8,11 @@ namespace RaceTo21
 {
     public class Card
     {
-        private string id;
-        private string fullName;
+        private string id; // To store Card's Id
+        private string fullName; // To store Card's full name
 
-        public string Id { get { return id; } }
-        public string FullName { get { return fullName; } }
+        public string Id { get { return id; } } // Encapsulation
+        public string FullName { get { return fullName; } } // Encapsulation
 
         public Card (string shortName,string longName)
         {
