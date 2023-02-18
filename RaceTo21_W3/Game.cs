@@ -129,21 +129,28 @@ namespace RaceTo21
                         }
                         else // The player still active
                         {
-                            cardTable.ShowHand(player);
-                            Console.Write("Do you want to stay? (Y/N)");
-                            string response = Console.ReadLine();
-                            if (response.ToUpper().StartsWith("Y")) // The player want to stay
+                            cardTable.ShowHand(player);                            
+                            while (true)
                             {
-                                player.status = PlayerStatus.stay;
+                                Console.Write("Do you want to stay? (Y/N)");
+                                string response = Console.ReadLine();
+                                if (response.ToUpper().StartsWith("Y")) // The player want to stay
+                                {
+                                    player.status = PlayerStatus.stay;
+                                    break;
+                                }
+                                else if (response.ToUpper().StartsWith("N")) // The player still want to play
+                                {
+                                    player.status = PlayerStatus.active;
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please answer Y(es) or N(o)!");
+                                    
+                                }
                             }
-                            else if (response.ToUpper().StartsWith("N")) // The player still want to play
-                            {
-                                player.status = PlayerStatus.active; 
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please answer Y(es) or N(o)!");
-                            }
+                            
 
                         }           
                     }
@@ -374,25 +381,30 @@ namespace RaceTo21
                 Console.WriteLine("================================");
                 for (int i = 0; i < players.Count; i++)
                 {
-                    Console.Write(players[i].Name + ", do you want to play another round? (Y/N)");
-                    string response = Console.ReadLine();
-                    // If the player agree, all data of this player will be reset
-                    if (response.ToUpper().StartsWith("Y"))
+                    while (true)
                     {
-                        players[i].cards = new List<Card>();
-                        players[i].score = 0;
-                        players[i].status = PlayerStatus.active;
-                    }
-                    // If the player disagree, the player will be removed
-                    else if (response.ToUpper().StartsWith("N"))
-                    {
-                        giveUpPlayers.Add(players[i]);
-                        players.RemoveAt(i);
-                        i--; // When data in the list is removed, the Index of all the data after it is subtracted by one, so here i is also subtracted by one to avoid skipping data. 
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please answer Y(es) or N(o)!");
+                        Console.Write(players[i].Name + ", do you want to play another round? (Y/N)");
+                        string response = Console.ReadLine();
+                        // If the player agree, all data of this player will be reset
+                        if (response.ToUpper().StartsWith("Y"))
+                        {
+                            players[i].cards = new List<Card>();
+                            players[i].score = 0;
+                            players[i].status = PlayerStatus.active;
+                            break;
+                        }
+                        // If the player disagree, the player will be removed
+                        else if (response.ToUpper().StartsWith("N"))
+                        {
+                            giveUpPlayers.Add(players[i]);
+                            players.RemoveAt(i);
+                            i--; // When data in the list is removed, the Index of all the data after it is subtracted by one, so here i is also subtracted by one to avoid skipping data. 
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please answer Y(es) or N(o)!");
+                        }
                     }
                 }
 
@@ -410,10 +422,12 @@ namespace RaceTo21
                 {
                     Console.WriteLine("================================");
                     int winnerPoints = 0;
+
+                    // Get the highest points from all players
                     foreach(var player in players)
                     {
                         Console.WriteLine(player.Name + "'s points: " + player.points);
-                        if (winnerPoints < player.points)
+                        if (winnerPoints < player.points) 
                         {
                             winnerPoints = player.points;
                         }
@@ -427,11 +441,11 @@ namespace RaceTo21
                         }
                     }
 
+                    // Find the player who has the highest points from all players
                     if (players.Find(player => player.score == winnerPoints) != null)
                     {
                         Console.WriteLine(players.Find(player => player.score == winnerPoints).Name + " is the final winner!");
                     }
-
                     if (giveUpPlayers.Find(player => player.score == winnerPoints) != null)
                     {
                         Console.WriteLine(giveUpPlayers.Find(player => player.score == winnerPoints).Name + " is the final winner!");
@@ -445,6 +459,8 @@ namespace RaceTo21
             else
             {
                 Console.WriteLine("================================");
+
+                // Output all players' name and their points
                 foreach (var player in players)
                 {
                     Console.WriteLine(player.Name + "'s points: " + player.points);
@@ -453,6 +469,7 @@ namespace RaceTo21
                 {
                     Console.WriteLine(player.Name + "'s points: " + player.points);
                 }
+
                 Console.WriteLine(players.Find(player => player.points == highPoints).Name + " is the final winner!");
                 Console.Write("Press <Enter> to exit... ");
                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
